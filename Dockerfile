@@ -1,6 +1,6 @@
 FROM golang:alpine AS builder
 
-RUN apk add --no-cache fuse-dev git libc-dev gcc g++
+RUN apk add --no-cache fuse-dev git libc-dev clang clang-dev
 
 RUN git clone https://github.com/distribyted/distribyted.git /app
 
@@ -12,7 +12,7 @@ RUN sed -ie 's/billziss-gh/winfsp/g' fuse/*.go
 
 RUN go mod init github.com/distribyted/distribyted && go mod tidy
 
-RUN go build -o distribyted cmd/distribyted/main.go
+RUN CXX=clang++ go build -o distribyted cmd/distribyted/main.go
 
 RUN mkdir /tmp/lib && cp /lib/ld-musl-* /tmp/lib
 
