@@ -12,7 +12,7 @@ RUN sed -ie 's/billziss-gh/winfsp/g' fuse/*.go
 
 RUN go mod init github.com/distribyted/distribyted && go mod tidy
 
-RUN CXX=clang++ go build -o distribyted cmd/distribyted/main.go
+RUN C=clang CXX=clang++ go build -o distribyted cmd/distribyted/main.go
 
 RUN mkdir /tmp/lib && cp /lib/ld-musl-* /tmp/lib
 
